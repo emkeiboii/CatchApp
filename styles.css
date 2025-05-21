@@ -1,0 +1,81 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* border: 0.1px solid red; */
+}
+
+:root {
+  --accent: #2200ff;
+  --text: #1e1e1e;
+  --grey: #b3b3b3;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.nav {
+  width: 100vw;
+  max-width: 1436px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters {
+  width: 100vw;
+  max-width: 1436px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input {
+  display: flex;
+  gap: 25px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact {
+  width: 100vw;
+  max-width: 1436px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.contact-options {
+  display: flex;
+  width: 100%;
+  max-width: 850px;
+  justify-content: space-between;
+}
+
+.last-contact {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contact-edit {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.contact-edit > div {
+  display: flex;
+  gap: 10px;
+}

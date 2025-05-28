@@ -13,28 +13,42 @@
       <div class="input">
         <button class="button open-modal" id="open-modal">Add</button>
         <div>
-          <input type="checkbox" name="select" /><label for="select"
-            >Select</label
-          >
+          <input type="checkbox" />
+          <label>Select</label>
         </div>
-        <option>Sort</option>
+        <select name="sort">
+          <option value="name">Sort by name</option>
+          <option value="date">Sort by date</option>
+        </select>
       </div>
-      <div><input type="search" placeholder="Search..." /></div>
+      <div>
+        <input
+          type="search"
+          id="search"
+          placeholder="Search..."
+          aria-label="Search contacts"
+        />
+      </div>
     </section>
     <dialog id="contact-modal">
       <form method="dialog" class="add-contact-form" id="add-contact-form">
         <input type="color" name="backgroundColor" value="#ffffff" />
+        <label for="firstName"
+          >Name:<input id="firstName" name="firstName" type="text" required
+        /></label>
 
-        <label for="firstName">Name:</label>
-        <input id="name" name="firstName" type="text" required />
-        <label for="name">Last name:</label>
-        <input id="name" name="lastName" type="text" />
+        <label for="lastName"
+          >Last name:<input id="lastName" name="lastName" type="text"
+        /></label>
 
-        <label for="birthday">Birthday:</label>
-        <input id="birthday" name="birthday" type="date" required />
+        <label for="birthday"
+          >Birthday:<input id="birthday" name="birthday" type="date" required
+        /></label>
 
-        <label for="last-contact">Last Contacted:</label>
-        <input id="last-contact" name="lastContact" type="date" required />
+        <label for="lastContact"
+          >Last Contacted:
+          <input id="lastContact" name="lastContact" type="date" required
+        /></label>
 
         <menu>
           <button type="submit">Submit</button>
@@ -57,15 +71,15 @@
           <div class="last-contact">
             <label>Last Contacted:</label>
             <input type="date" />
-            <button>✅</button>
+            <button class="update-today">✅</button>
           </div>
           <div class="contact-edit">
-            <button>note</button>
-            <div>
-              <button class="favourite">fav</button>
-              <button class="edit-profile">edit</button>
-              <button class="delete-profile">remove</button>
-            </div>
+            <!-- <button>note</button> -->
+            <!-- <div> -->
+            <button class="favourite">fav</button>
+            <button class="edit-contact">edit</button>
+            <button class="delete-contact">remove</button>
+            <!-- </div> -->
           </div>
         </div>
       </div>

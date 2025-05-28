@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CatchApp</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <nav class="nav"><span>CatchApp</span><a>🤓</a></nav>
     <section class="filters">
       <div class="input">
-        <button>Add</button>
+        <button class="button open-modal" id="open-modal">Add</button>
         <div>
           <input type="checkbox" name="select" /><label for="select"
             >Select</label
@@ -20,9 +21,29 @@
       </div>
       <div><input type="search" placeholder="Search..." /></div>
     </section>
+    <dialog id="contact-modal">
+      <form method="dialog" class="add-contact-form" id="add-contact-form">
+        <input type="color" name="backgroundColor" value="#ffffff" />
+
+        <label for="firstName">Name:</label>
+        <input id="name" name="firstName" type="text" required />
+        <label for="name">Last name:</label>
+        <input id="name" name="lastName" type="text" />
+
+        <label for="birthday">Birthday:</label>
+        <input id="birthday" name="birthday" type="date" required />
+
+        <label for="last-contact">Last Contacted:</label>
+        <input id="last-contact" name="lastContact" type="date" required />
+
+        <menu>
+          <button type="submit">Submit</button>
+          <button id="close-modal" type="button">Cancel</button>
+        </menu>
+      </form>
+    </dialog>
     <div class="contact-list">
       <div class="contact" id="132145">
-        <!-- Contact Info Section -->
         <div class="contact-info">
           <div class="bg-color">
             <span>M</span>
@@ -32,17 +53,12 @@
             <span>Birthday: 09/02/2003</span>
           </div>
         </div>
-
-        <!-- Contact Options Section -->
         <div class="contact-options">
-          <!-- Last Contact -->
           <div class="last-contact">
             <label>Last Contacted:</label>
-            <button>dd/mm/yyyy</button>
+            <input type="date" />
             <button>✅</button>
           </div>
-
-          <!-- Notes and Actions -->
           <div class="contact-edit">
             <button>note</button>
             <div>

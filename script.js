@@ -3,6 +3,11 @@ const openButton = document.getElementById("open-modal");
 const closeButton = document.getElementById("close-modal");
 const addContactForm = document.getElementById("add-contact-form");
 const contactList = document.querySelector(".contact-list");
+function getAllContacts() {
+  return document.querySelectorAll(".contact");
+}
+
+const currentContacts = getAllContacts();
 
 let contactArray = [
   {
@@ -12,6 +17,7 @@ let contactArray = [
     lastName: "Johnson",
     birthday: "1995-06-12",
     lastContact: "2024-12-01",
+    notes: "OSKABOLD ",
     isFavourite: false,
   },
   {
@@ -21,6 +27,7 @@ let contactArray = [
     lastName: "Nguyen",
     birthday: "1990-03-28",
     lastContact: "2025-02-20",
+    notes: "",
     isFavourite: false,
   },
   {
@@ -30,6 +37,7 @@ let contactArray = [
     lastName: "Smith",
     birthday: "1987-11-05",
     lastContact: "2025-04-10",
+    notes: "",
     isFavourite: false,
   },
   {
@@ -39,6 +47,7 @@ let contactArray = [
     lastName: "Lee",
     birthday: "2001-08-22",
     lastContact: "2025-01-15",
+    notes: "",
     isFavourite: false,
   },
   {
@@ -48,6 +57,7 @@ let contactArray = [
     lastName: "Martinez",
     birthday: "1998-02-17",
     lastContact: "2025-03-01",
+    notes: "",
     isFavourite: false,
   },
 ];
@@ -55,17 +65,37 @@ let contactArray = [
 function addContact(e) {
   e.preventDefault();
 
-  const contact = {
-    id: Date.now(),
-    backgroundColor: addContactForm.backgroundColor.value || "#ffffff",
-    firstName: addContactForm.firstName.value,
-    lastName: addContactForm.lastName.value,
-    birthday: addContactForm.birthday.value,
-    lastContact: addContactForm.lastContact.value,
-    isFavourite: false,
-  };
+  const editingId = addContactForm.dataset.editingId;
 
-  contactArray.push(contact);
+  if (editingId) {
+    const tempContact = contactArray.find(
+      (contact) => contact.id === parseInt(editingId)
+    );
+    if (tempContact) {
+      tempContact.backgroundColor =
+        addContactForm.backgroundColor.value || "#ffffff";
+      tempContact.firstName = addContactForm.firstName.value;
+      tempContact.lastName = addContactForm.lastName.value;
+      tempContact.birthday = addContactForm.birthday.value;
+      tempContact.lastContact = addContactForm.lastContact.value;
+      tempContact.notes = addContactForm.notes.value;
+    }
+
+    delete addContactForm.dataset.editingId;
+  } else {
+    const contact = {
+      id: Date.now(),
+      backgroundColor: addContactForm.backgroundColor.value || "#ffffff",
+      firstName: addContactForm.firstName.value,
+      lastName: addContactForm.lastName.value,
+      birthday: addContactForm.birthday.value,
+      lastContact: addContactForm.lastContact.value,
+      notes: addContactForm.notes.value,
+      isFavourite: false,
+    };
+    contactArray.push(contact);
+  }
+
   populateList(contactArray);
   addContactForm.reset();
   modal.close();
@@ -88,16 +118,17 @@ function populateList(contacts) {
                       </div>
                       <div class="contact-options">
                         <div class="last-contact">
-                          <label>Last Contacted: <input type="date" name="lastContact" value="${
-                            contact.lastContact
-                          }" /></label>
+                       <span>Last Contacted: ${contact.lastContact}</span>
                         
                           <button class="update-today">✅</button>
                         </div>
-                        <div class="contact-edit">
-                          <button type="button" class="favourite">fav</button> 
-                          <button type="button" class="edit-contat">edit</button>
-                          <button type="button" class="delete-contact">remove</button>
+                           <div class="contact-edit">
+                          <button>note</button>
+                          <div>
+                            <button class="favourite">fav</button>
+                            <button class="edit-contact">edit</button>
+                            <button class="delete-contact">remove</button>
+                          </div>
                         </div>
                       </div>
                     </div>`
@@ -105,33 +136,49 @@ function populateList(contacts) {
     .join("");
 }
 
-populateList(contactArray);
-let contacts = document.querySelectorAll(".contact");
-
 function handleClick(e) {
   const contactElement = e.target.closest(".contact");
   const contactId = parseInt(contactElement.id, 10);
   const contact = contactArray.find((contact) => contact.id === contactId);
 
-  console.log({ contactElement, contactId, contact });
-
   if (e.target.classList.contains("favourite")) {
     contact.isFavourite = !contact.isFavourite;
     e.target.textContent = contact.isFavourite ? "❤️" : "fav";
-    console.log(contactId);
-  } else if (e.target.classList.contains("edit-contat")) {
-    console.log("edit-contat");
+  } else if (e.target.classList.contains("edit-contact")) {
+    modal.showModal();
+
+    addContactForm.backgroundColor.value = contact.backgroundColor;
+    addContactForm.firstName.value = contact.firstName;
+    addContactForm.lastName.value = contact.lastName;
+    addContactForm.birthday.value = contact.birthday;
+    addContactForm.lastContact.value = contact.lastContact;
+    addContactForm.notes.value = contact.notes;
+
+    addContactForm.dataset.editingId = contact.id;
   } else if (e.target.classList.contains("delete-contact")) {
     if (window.confirm("Do you really want to delete this contact?")) {
       contactArray = contactArray.filter((contact) => contact.id !== contactId);
       contactElement.remove();
     } else return;
   } else if (e.target.classList.contains("update-today")) {
-    console.log("update-today");
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    if (window.confirm("Are you sure?")) {
+      const dateSpan = contactElement.querySelector(".last-contact span");
+      contact.lastContact = formattedDate;
+      if (dateSpan) {
+        dateSpan.textContent = `Last Contacted: ${formattedDate}`;
+      }
+    }
   }
 }
-
-contacts.forEach((contact) => contact.addEventListener("click", handleClick));
+populateList(contactArray);
+contactList.addEventListener("click", handleClick);
 
 addContactForm.addEventListener("submit", addContact);
 openButton.addEventListener("click", () => modal.showModal());

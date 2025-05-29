@@ -9,14 +9,15 @@
   </head>
   <body>
     <nav class="nav"><span>CatchApp</span><a>🤓</a></nav>
+
     <section class="filters">
-      <div class="input">
+      <div class="input-filters">
         <button class="button open-modal" id="open-modal">Add</button>
         <div>
-          <input type="checkbox" />
-          <label>Select</label>
+          <input type="checkbox" disabled />
+          <label style="color: gray">Select</label>
         </div>
-        <select name="sort">
+        <select name="sort" disabled>
           <option value="name">Sort by name</option>
           <option value="date">Sort by date</option>
         </select>
@@ -27,50 +28,13 @@
           id="search"
           placeholder="Search..."
           aria-label="Search contacts"
+          disabled
         />
       </div>
     </section>
-    <dialog id="contact-modal">
-      <form method="dialog" class="add-contact-form" id="add-contact-form">
-        <input type="color" name="backgroundColor" value="#ffffff" />
-        <label for="firstName"
-          >Name:<input id="firstName" name="firstName" type="text" required
-        /></label>
 
-        <label for="lastName"
-          >Last name:<input id="lastName" name="lastName" type="text"
-        /></label>
-
-        <label for="birthday"
-          >Birthday:<input id="birthday" name="birthday" type="date" required
-        /></label>
-
-        <label for="lastContact"
-          >Last Contacted:
-          <input id="lastContact" name="lastContact" type="date" required
-        /></label>
-
-        <label for="notes"
-          >Notes: <input id="notes" name="notes" type="text" value=""
-        /></label>
-
-        <menu>
-          <button type="submit">Submit</button>
-          <button id="close-modal" type="button">Cancel</button>
-        </menu>
-      </form>
-    </dialog>
-    <dialog id="notes-modal">
-      <form id="add-notes-form">
-        <label for="notesX"
-          >Notes: <input id="notesX" name="notesX" type="text" value=""
-        /></label>
-        <button type="submit">Submit</button>
-        <button id="close-notes-modal" type="button">Cancel</button>
-      </form>
-    </dialog>
     <div class="contact-list">
-      <div class="contact" id="132145">
+      <!-- <div class="contact" id="132145">
         <div class="contact-info">
           <div class="bg-color">
             <span>M</span>
@@ -95,7 +59,54 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
+
+    <!-- MODALS -->
+    <dialog id="contact-modal">
+      <form method="dialog" class="add-contact-form" id="add-contact-form">
+        <div class="input-row color">
+          <input
+            type="color"
+            name="backgroundColor"
+            value="#2200FF"
+            id="color"
+          />
+        </div>
+        <div class="input-row">
+          <label for="firstName">Name:</label
+          ><input id="firstName" name="firstName" type="text" required />
+        </div>
+        <div class="input-row">
+          <label for="lastName">Last name:</label
+          ><input id="lastName" name="lastName" type="text" />
+        </div>
+        <div class="input-row">
+          <label for="birthdate">Birthdate:</label
+          ><input id="birthdate" name="birthdate" type="date" required />
+        </div>
+        <div class="input-row">
+          <label for="lastContact">Last Contacted: </label
+          ><input id="lastContact" name="lastContact" type="date" required />
+        </div>
+        <div class="input-row">
+          <label for="notes">Notes: </label
+          ><input id="notes" name="notes" type="text" value="" />
+        </div>
+
+        <menu>
+          <button type="submit">Submit</button>
+          <button id="close-modal" type="button">Cancel</button>
+        </menu>
+      </form>
+    </dialog>
+    <dialog id="notes-modal">
+      <form id="add-notes-form">
+        <label for="notesX">Notes: </label
+        ><input id="notesX" name="notesX" type="text" value="" />
+        <button type="submit">Submit</button>
+        <button id="close-notes-modal" type="button">Cancel</button>
+      </form>
+    </dialog>
   </body>
 </html>

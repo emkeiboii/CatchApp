@@ -3,6 +3,8 @@
   margin: 0;
   box-sizing: border-box;
   /* border: 0.1px solid red; */
+  font-family: Helvetica, sans-serif;
+  font-weight: 200;
 }
 
 :root {
@@ -25,6 +27,8 @@ body {
   justify-content: space-between;
 }
 
+/* FILTERS */
+
 .filters {
   width: 100vw;
   max-width: 1436px;
@@ -32,15 +36,31 @@ body {
   justify-content: space-between;
 }
 
-.input {
+.input-filters {
   display: flex;
   gap: 25px;
 }
 
+.open-modal.button {
+  all: unset;
+  background-color: var(--accent);
+  cursor: pointer;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+/* contact list */
+
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 30px;
 }
 
 .contact {
@@ -56,6 +76,28 @@ body {
   gap: 25px;
 }
 
+.personal-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.personal-info span:nth-of-type(1) {
+  font-weight: 400;
+}
+
+.personal-info span:nth-of-type(2) {
+  font-size: 0.9rem;
+}
+
+.bg-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
 .contact-options {
   display: flex;
   width: 100%;
@@ -67,6 +109,13 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+  fill: white;
+}
+
+.update-today {
+  background-color: var(--text);
+  padding: 8px 10px;
+  border-radius: 50%;
 }
 
 .contact-edit {
@@ -78,4 +127,54 @@ body {
 .contact-edit > div {
   display: flex;
   gap: 10px;
+}
+
+/* modal */
+
+::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+#contact-modal {
+  margin: auto;
+}
+
+.add-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  min-width: 260px;
+}
+
+#color {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 4rem;
+  height: 3rem;
+  border: none;
+  cursor: pointer;
+}
+
+#color::-webkit-color-swatch {
+  border-radius: 5px;
+  border: #1e1e1e solid 1px;
+}
+
+.input-row.color {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  width: 18px;
 }

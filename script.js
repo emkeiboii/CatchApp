@@ -2,7 +2,10 @@ const modal = document.getElementById("contact-modal");
 const openButton = document.getElementById("open-modal");
 const closeButton = document.getElementById("close-modal");
 const addContactForm = document.getElementById("add-contact-form");
+const addNotesForm = document.getElementById("add-notes-form");
 const contactList = document.querySelector(".contact-list");
+const notesModal = document.getElementById("notes-modal");
+const closeNotesButton = document.getElementById("close-notes-modal");
 function getAllContacts() {
   return document.querySelectorAll(".contact");
 }
@@ -68,17 +71,17 @@ function addContact(e) {
   const editingId = addContactForm.dataset.editingId;
 
   if (editingId) {
-    const tempContact = contactArray.find(
+    const editContact = contactArray.find(
       (contact) => contact.id === parseInt(editingId)
     );
-    if (tempContact) {
-      tempContact.backgroundColor =
+    if (editContact) {
+      editContact.backgroundColor =
         addContactForm.backgroundColor.value || "#ffffff";
-      tempContact.firstName = addContactForm.firstName.value;
-      tempContact.lastName = addContactForm.lastName.value;
-      tempContact.birthday = addContactForm.birthday.value;
-      tempContact.lastContact = addContactForm.lastContact.value;
-      tempContact.notes = addContactForm.notes.value;
+      editContact.firstName = addContactForm.firstName.value;
+      editContact.lastName = addContactForm.lastName.value;
+      editContact.birthday = addContactForm.birthday.value;
+      editContact.lastContact = addContactForm.lastContact.value;
+      editContact.notes = addContactForm.notes.value;
     }
 
     delete addContactForm.dataset.editingId;
@@ -123,7 +126,7 @@ function populateList(contacts) {
                           <button class="update-today">✅</button>
                         </div>
                            <div class="contact-edit">
-                          <button>note</button>
+                          <button class="notes-contact">note</button>
                           <div>
                             <button class="favourite">fav</button>
                             <button class="edit-contact">edit</button>
@@ -175,11 +178,34 @@ function handleClick(e) {
         dateSpan.textContent = `Last Contacted: ${formattedDate}`;
       }
     }
+  } else if (e.target.classList.contains("notes-contact")) {
+    notesModal.showModal();
+
+    addNotesForm.notesX.value = contact.notes;
+    addNotesForm.dataset.editingId = contact.id;
   }
 }
+
+function addNotes(e) {
+  e.preventDefault();
+  const editingId = addNotesForm.dataset.editingId;
+  const editContact = contactArray.find(
+    (contact) => contact.id === parseInt(editingId)
+  );
+  if (editContact) {
+    editContact.notes = addNotesForm.notesX.value;
+  }
+
+  delete addContactForm.dataset.editingId;
+  populateList(contactArray);
+  addNotesForm.reset();
+  notesModal.close();
+}
+
 populateList(contactArray);
 contactList.addEventListener("click", handleClick);
-
 addContactForm.addEventListener("submit", addContact);
+notesModal.addEventListener("submit", addNotes);
+closeNotesButton.addEventListener("click", () => notesModal.close());
 openButton.addEventListener("click", () => modal.showModal());
 closeButton.addEventListener("click", () => modal.close());

@@ -19,58 +19,60 @@ const solidHeartSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 
 
 const currentContacts = getAllContacts();
 
-let contactArray = [
-  {
-    id: Date.now() + 1,
-    backgroundColor: "#FF6B6B",
-    firstName: "Alice",
-    lastName: "Johnson",
-    birthdate: "1995-06-12",
-    lastContact: "2024-12-01",
-    notes: "OSKABOLD ",
-    isFavourite: false,
-  },
-  {
-    id: Date.now() + 2,
-    backgroundColor: "#6BCB77",
-    firstName: "Ben",
-    lastName: "Nguyen",
-    birthdate: "1990-03-28",
-    lastContact: "2025-02-20",
-    notes: "",
-    isFavourite: false,
-  },
-  {
-    id: Date.now() + 3,
-    backgroundColor: "#4D96FF",
-    firstName: "Carla",
-    lastName: "Smith",
-    birthdate: "1987-11-05",
-    lastContact: "2025-04-10",
-    notes: "",
-    isFavourite: false,
-  },
-  {
-    id: Date.now() + 4,
-    backgroundColor: "#FFD93D",
-    firstName: "David",
-    lastName: "Lee",
-    birthdate: "2001-08-22",
-    lastContact: "2025-01-15",
-    notes: "",
-    isFavourite: false,
-  },
-  {
-    id: Date.now() + 5,
-    backgroundColor: "#9D4EDD",
-    firstName: "Ella",
-    lastName: "Martinez",
-    birthdate: "1998-02-17",
-    lastContact: "2025-03-01",
-    notes: "",
-    isFavourite: false,
-  },
-];
+let contactArray = JSON.parse(localStorage.getItem("contactArray")) || [];
+
+// let contactArray = [
+//   {
+//     id: Date.now() + 1,
+//     backgroundColor: "#FF6B6B",
+//     firstName: "Alice",
+//     lastName: "Johnson",
+//     birthdate: "1995-06-12",
+//     lastContact: "2024-12-01",
+//     notes: "OSKABOLD ",
+//     isFavourite: false,
+//   },
+//   {
+//     id: Date.now() + 2,
+//     backgroundColor: "#6BCB77",
+//     firstName: "Ben",
+//     lastName: "Nguyen",
+//     birthdate: "1990-03-28",
+//     lastContact: "2025-02-20",
+//     notes: "",
+//     isFavourite: false,
+//   },
+//   {
+//     id: Date.now() + 3,
+//     backgroundColor: "#4D96FF",
+//     firstName: "Carla",
+//     lastName: "Smith",
+//     birthdate: "1987-11-05",
+//     lastContact: "2025-04-10",
+//     notes: "",
+//     isFavourite: false,
+//   },
+//   {
+//     id: Date.now() + 4,
+//     backgroundColor: "#FFD93D",
+//     firstName: "David",
+//     lastName: "Lee",
+//     birthdate: "2001-08-22",
+//     lastContact: "2025-01-15",
+//     notes: "",
+//     isFavourite: false,
+//   },
+//   {
+//     id: Date.now() + 5,
+//     backgroundColor: "#9D4EDD",
+//     firstName: "Ella",
+//     lastName: "Martinez",
+//     birthdate: "1998-02-17",
+//     lastContact: "2025-03-01",
+//     notes: "",
+//     isFavourite: false,
+//   },
+// ];
 
 function addContact(e) {
   e.preventDefault();
@@ -106,6 +108,7 @@ function addContact(e) {
     contactArray.push(contact);
   }
 
+  localStorage.setItem("contactArray", JSON.stringify(contactArray));
   populateList(contactArray);
   addContactForm.reset();
   modal.close();
@@ -161,7 +164,9 @@ function handleClick(e) {
 
   if (favouriteBtn) {
     contact.isFavourite = !contact.isFavourite;
+    // FIX TOGGLE SOLID TO LINE
     e.target.innerHTML = contact.isFavourite ? solidHeartSVG : oLHeartSVG;
+    localStorage.setItem("contactArray", JSON.stringify(contactArray));
   } else if (editBtn) {
     modal.showModal();
 
@@ -173,11 +178,13 @@ function handleClick(e) {
     addContactForm.notes.value = contact.notes;
 
     addContactForm.dataset.editingId = contact.id;
+    localStorage.setItem("contactArray", JSON.stringify(contactArray));
   } else if (deleteBtn) {
     if (window.confirm("Do you really want to delete this contact?")) {
       contactArray = contactArray.filter((contact) => contact.id !== contactId);
       contactElement.remove();
     } else return;
+    localStorage.setItem("contactArray", JSON.stringify(contactArray));
   } else if (updateTodayBtn) {
     const today = new Date();
     const year = today.getFullYear();
@@ -192,12 +199,14 @@ function handleClick(e) {
       if (dateSpan) {
         dateSpan.textContent = `Last Contacted: ${formattedDate}`;
       }
+      localStorage.setItem("contactArray", JSON.stringify(contactArray));
     }
   } else if (notesBtn) {
     notesModal.showModal();
 
     addNotesForm.notesX.value = contact.notes;
     addNotesForm.dataset.editingId = contact.id;
+    localStorage.setItem("contactArray", JSON.stringify(contactArray));
   }
 }
 
@@ -212,6 +221,7 @@ function addNotes(e) {
   }
 
   delete addContactForm.dataset.editingId;
+  localStorage.setItem("contactArray", JSON.stringify(contactArray));
   populateList(contactArray);
   addNotesForm.reset();
   notesModal.close();

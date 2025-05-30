@@ -118,6 +118,10 @@ button {
   border-radius: 50%;
 }
 
+.favourite.is-favourite {
+  fill: red;
+}
+
 .contact-edit {
   display: flex;
   align-items: center;

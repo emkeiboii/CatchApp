@@ -17,13 +17,15 @@
           <input type="checkbox" disabled />
           <label style="color: gray">Select</label>
         </div>
-        <select name="sort">
-          <option value="name">Sort by name</option>
-          <option value="name">Sort by favorite</option>
-          <option value="date">Sort by date(asc)</option>
-          <option value="date">Sort by date(desc)</option>
-          <option value="date">Sort by birthdate(asc)</option>
-          <option value="date">Sort by birthdate(desc)</option>
+        <select name="sort" id="contact-sort">
+          <option value="">Select an option</option>
+          <option value="favourite">Sort by favorite</option>
+          <option value="name-asc">Sort by name(asc)</option>
+          <option value="name-desc">Sort by name(desc)</option>
+          <option value="lastContact-asc">Sort by last contacted(asc)</option>
+          <option value="lastContact-desc">Sort by last contacted(desc)</option>
+          <option value="birthdate-asc">Sort by birthdate(asc)</option>
+          <option value="birthdate-desc">Sort by birthdate(desc)</option>
         </select>
       </div>
       <div>

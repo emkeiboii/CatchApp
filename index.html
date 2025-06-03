@@ -17,9 +17,13 @@
           <input type="checkbox" disabled />
           <label style="color: gray">Select</label>
         </div>
-        <select name="sort" disabled>
+        <select name="sort">
           <option value="name">Sort by name</option>
-          <option value="date">Sort by date</option>
+          <option value="name">Sort by favorite</option>
+          <option value="date">Sort by date(asc)</option>
+          <option value="date">Sort by date(desc)</option>
+          <option value="date">Sort by birthdate(asc)</option>
+          <option value="date">Sort by birthdate(desc)</option>
         </select>
       </div>
       <div>
@@ -91,21 +95,40 @@
         </div>
         <div class="input-row">
           <label for="notes">Notes: </label
-          ><input id="notes" name="notes" type="text" value="" />
+          ><textarea
+            id="notes"
+            name="notes"
+            type="text"
+            value=""
+            rows="5"
+            cols="30"
+          ></textarea>
         </div>
 
         <menu>
-          <button type="submit">Submit</button>
           <button id="close-modal" type="button">Cancel</button>
+          <button type="submit" class="submit-btn">Submit</button>
         </menu>
       </form>
     </dialog>
+
     <dialog id="notes-modal">
       <form id="add-notes-form">
-        <label for="notesX">Notes: </label
-        ><input id="notesX" name="notesX" type="text" value="" />
-        <button type="submit">Submit</button>
-        <button id="close-notes-modal" type="button">Cancel</button>
+        <div>
+          <label for="notesX">Notes: </label
+          ><textarea
+            id="notesX"
+            name="notesX"
+            type="text"
+            value=""
+            rows="5"
+            cols="30"
+          ></textarea>
+        </div>
+        <div>
+          <button type="submit" class="submit-btn">Submit</button>
+          <button id="close-notes-modal" type="button">Cancel</button>
+        </div>
       </form>
     </dialog>
   </body>

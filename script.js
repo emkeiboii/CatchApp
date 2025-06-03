@@ -146,7 +146,7 @@ function handleClick(e) {
 
     const formattedDate = `${year}-${month}-${day}`;
 
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Contacted today?")) {
       const dateSpan = contactElement.querySelector(".last-contact span");
       contact.lastContact = formattedDate;
       if (dateSpan) {

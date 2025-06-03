@@ -38,6 +38,7 @@ body {
 
 .input-filters {
   display: flex;
+  align-items: center;
   gap: 25px;
 }
 
@@ -139,6 +140,9 @@ button {
 
 #contact-modal {
   margin: auto;
+  padding: 0px 20px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
 }
 
 .add-contact-form {
@@ -165,6 +169,12 @@ button {
   cursor: pointer;
 }
 
+#contact-modal menu {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
 #color::-webkit-color-swatch {
   border-radius: 5px;
   border: #1e1e1e solid 1px;
@@ -175,6 +185,42 @@ button {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+/* notes modal */
+#notes-modal {
+  margin: auto;
+  padding: 0px 20px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
+}
+
+#add-notes-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+}
+
+#add-notes-form div:nth-of-type(1) {
+  display: flex;
+  flex-direction: column;
+  min-width: 260px;
+}
+
+#add-notes-form div:nth-of-type(2) {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
+.submit-btn {
+  all: unset;
+  background-color: var(--accent);
+  cursor: pointer;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
 }
 
 .delete-contact svg {

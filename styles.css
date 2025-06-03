@@ -22,7 +22,7 @@ body {
 
 .nav {
   width: 100vw;
-  max-width: 1436px;
+  max-width: 1080px;
   display: flex;
   justify-content: space-between;
 }
@@ -31,7 +31,7 @@ body {
 
 .filters {
   width: 100vw;
-  max-width: 1436px;
+  max-width: 1080px;
   display: flex;
   justify-content: space-between;
 }
@@ -65,7 +65,7 @@ button {
 
 .contact {
   width: 100vw;
-  max-width: 1436px;
+  max-width: 1080px;
   display: flex;
   justify-content: space-between;
 }
@@ -101,7 +101,7 @@ button {
 .contact-options {
   display: flex;
   width: 100%;
-  max-width: 850px;
+  max-width: 600px;
   justify-content: space-between;
 }
 
@@ -113,9 +113,7 @@ button {
 }
 
 .update-today {
-  background-color: var(--text);
-  padding: 8px 10px;
-  border-radius: 50%;
+  fill: rgb(28, 170, 0);
 }
 
 .favourite.is-favourite {
@@ -179,6 +177,16 @@ button {
   align-items: center;
 }
 
+.delete-contact svg {
+  width: 16px;
+  height: 16px;
+}
+.favourite svg {
+  width: 20px;
+  height: 20px;
+}
+
 svg {
   width: 18px;
+  height: 18px;
 }

@@ -81,7 +81,7 @@ function populateList(contacts) {
                         <div class="last-contact">
                        <span>Last Contacted: ${contact.lastContact}</span>
                         
-                          <button class="update-today">${checkSVG}</button>
+                          <button class="update-today" title="Catch up today">${checkSVG}</button>
                         </div>
                            <div class="contact-edit">
                           <button class="notes-contact">${oLStickyNoteSVG}</button>
@@ -99,7 +99,7 @@ function populateList(contacts) {
     .join("");
 }
 
-function handleClick(e) {
+function handleOption(e) {
   const contactElement = e.target.closest(".contact");
 
   if (!contactElement) return;
@@ -185,7 +185,6 @@ function sortContactArray(e) {
   let sortOption = e.target.value;
   let sortedArray = contactArray;
 
-  console.log(sortedArray);
   if (sortOption === "favourite") {
     sortedArray.sort((a, b) => {
       if (a.isFavourite && !b.isFavourite) {
@@ -199,22 +198,82 @@ function sortContactArray(e) {
 
     populateList(sortedArray);
   } else if (sortOption === "name-asc") {
-    console.log(sortOption);
+    sortedArray.sort((a, b) => {
+      if (a.firstName < b.firstName) {
+        return -1;
+      } else if (a.firstName > b.firstName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
   } else if (sortOption === "name-desc") {
-    console.log(sortOption);
+    sortedArray.sort((a, b) => {
+      if (a.firstName > b.firstName) {
+        return -1;
+      } else if (a.firstName < b.firstName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
   } else if (sortOption === "lastContact-asc") {
-    console.log(sortOption);
+    sortedArray.sort((a, b) => {
+      if (a.lastContact > b.lastContact) {
+        return -1;
+      } else if (a.lastContact < b.lastContact) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
   } else if (sortOption === "lastContact-desc") {
-    console.log(sortOption);
+    sortedArray.sort((a, b) => {
+      if (a.lastContact < b.lastContact) {
+        return -1;
+      } else if (a.lastContact > b.lastContact) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
   } else if (sortOption === "birthdate-asc") {
-    console.log(sortOption);
+    sortedArray.sort((a, b) => {
+      if (a.birthdate < b.birthdate) {
+        return -1;
+      } else if (a.birthdate > b.birthdate) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
   } else if (sortOption === "birthdate-desc") {
-    console.log(sortOption);
-  } else populateList(contactArray);
+    sortedArray.sort((a, b) => {
+      if (a.birthdate > b.birthdate) {
+        return -1;
+      } else if (a.birthdate < b.birthdate) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    populateList(sortedArray);
+  } else contactArray = sortedArray;
 }
 
 populateList(contactArray);
-contactList.addEventListener("click", handleClick);
+contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
 notesModal.addEventListener("submit", addNotes);
 closeNotesButton.addEventListener("click", () => notesModal.close());

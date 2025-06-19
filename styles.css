@@ -49,6 +49,7 @@ body {
   padding: 10px 20px;
   color: white;
   border-radius: 5px;
+  transition: all 250ms ease-in-out;
 }
 
 button {
@@ -62,6 +63,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin: 0px 24px;
 }
 
 .contact {
@@ -113,7 +115,7 @@ button {
   fill: white;
 }
 
-.update-today {
+.update-today #Layer_1 {
   fill: rgb(28, 170, 0);
 }
 
@@ -223,16 +225,46 @@ button {
   border-radius: 5px;
 }
 
-.delete-contact svg {
-  width: 16px;
-  height: 16px;
-}
-.favourite svg {
+svg {
   width: 20px;
   height: 20px;
 }
 
-svg {
-  width: 18px;
-  height: 18px;
+.open-modal.button:hover {
+  background-color: #1900be;
+}
+
+.update-today:hover #Layer_1 {
+  fill: rgb(1, 201, 1);
+  transition: all 150ms ease-in-out;
+}
+
+.delete-contact:hover {
+  fill: grey;
+  transition: all 150ms ease-in-out;
+}
+.edit-contact:hover svg {
+  fill: grey;
+  transition: all 150ms ease-in-out;
+}
+.notes-contact:hover svg {
+  fill: grey;
+  transition: all 150ms ease-in-out;
+}
+
+.favourite:hover svg {
+  opacity: 60%;
+  transition: all 150ms ease-in-out;
+}
+
+.favourite.is-favourite:hover svg {
+  opacity: 60%;
+  transition: all 150ms ease-in-out;
+}
+
+.contact-info-container {
+  display: flex;
+
+  max-width: 300px;
+  gap: 24px;
 }

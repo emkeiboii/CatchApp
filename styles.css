@@ -1,8 +1,8 @@
+/* ─────────────── RESET & BASE STYLES ─────────────── */
 * {
-  padding: 0;
-  margin: 0;
   box-sizing: border-box;
-  /* border: 0.1px solid red; */
+  margin: 0;
+  padding: 0;
   font-family: Helvetica, sans-serif;
   font-weight: 200;
 }
@@ -11,131 +11,184 @@
   --accent: #2200ff;
   --text: #1e1e1e;
   --grey: #b3b3b3;
+  --light-grey: #e4e4e4;
 }
 
+/* ─────────────── LAYOUT ─────────────── */
 body {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-areas: "aside main-area";
+}
+
+/* Sidebar */
+aside {
+  grid-area: aside;
+}
+
+/* ─────────────── NAVIGATION ─────────────── */
+.nav {
+  flex: 0 0 auto;
+  background-color: var(--accent);
+  color: white;
+  padding: 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ─────────────── MAIN ─────────────── */
+main {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.main-area {
+  grid-area: main-area;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 35px;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.nav {
-  width: 100vw;
-  max-width: 1080px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* FILTERS */
-
+/* ─────────────── FILTERS ─────────────── */
 .filters {
-  width: 100vw;
-  max-width: 1080px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-
 .input-filters {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 24px;
 }
-
 .open-modal.button {
   all: unset;
   background-color: var(--accent);
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 8px 20px;
   color: white;
   border-radius: 5px;
   transition: all 250ms ease-in-out;
 }
-
-button {
-  all: unset;
-  cursor: pointer;
+.open-modal.button:hover {
+  background-color: #1900be;
 }
 
-/* contact list */
-
+/* ─────────────── CONTACT LIST ─────────────── */
+.contact-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 .contact-list {
   display: flex;
   flex-direction: column;
   gap: 30px;
   margin: 0px 24px;
 }
-
 .contact {
   width: 100vw;
   max-width: 1080px;
   display: flex;
   justify-content: space-between;
 }
-
 .contact-info {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 24px;
 }
-
-.personal-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.personal-info span:nth-of-type(1) {
-  font-weight: 400;
-}
-
-.personal-info span:nth-of-type(2) {
-  font-size: 0.9rem;
-}
-
 .bg-color {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
 }
-
+.personal-info {
+  display: flex;
+  flex-direction: column;
+}
+.personal-info span:nth-of-type(1) {
+  font-weight: 400;
+}
+.personal-info span:nth-of-type(2) {
+  font-size: 0.9rem;
+}
 .contact-options {
   display: flex;
   width: 100%;
   max-width: 600px;
   justify-content: space-between;
 }
-
 .last-contact {
   display: flex;
   align-items: center;
   gap: 5px;
   fill: white;
 }
-
-.update-today #Layer_1 {
-  fill: rgb(28, 170, 0);
-}
-
-.favourite.is-favourite {
-  fill: red;
-}
-
 .contact-edit {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 32px;
 }
-
 .contact-edit > div {
   display: flex;
   gap: 10px;
 }
+.contact-info-container {
+  display: flex;
+  max-width: 300px;
+  gap: 24px;
+}
 
-/* modal */
+/* ─────────────── BUTTONS ─────────────── */
+button {
+  all: unset;
+  cursor: pointer;
+}
+.submit-btn {
+  all: unset;
+  background-color: var(--accent);
+  cursor: pointer;
+  padding: 12px 24px;
+  color: white;
+  border-radius: 5px;
+}
 
+/* ─────────────── SVGs & ICON STYLING ─────────────── */
+svg {
+  width: 22px;
+  height: 22px;
+}
+.update-today #Layer_1 {
+  fill: rgb(28, 170, 0);
+}
+.update-today:hover #Layer_1 {
+  fill: rgb(1, 201, 1);
+  transition: all 150ms ease-in-out;
+}
+.favourite.is-favourite {
+  fill: red;
+}
+.favourite:hover svg,
+.favourite.is-favourite:hover svg {
+  opacity: 60%;
+  transition: all 150ms ease-in-out;
+}
+.delete-contact:hover,
+.edit-contact:hover svg,
+.notes-contact:hover svg {
+  fill: grey;
+  transition: all 150ms ease-in-out;
+}
+
+/* ─────────────── MODALS ─────────────── */
 ::backdrop {
   backdrop-filter: blur(2px);
 }
@@ -146,20 +199,22 @@ button {
   border-radius: 10px;
   border: 1px solid #d7d7d7;
 }
-
 .add-contact-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 30px;
+  gap: 24px;
+  padding: 34px;
 }
-
 .input-row {
   display: flex;
   flex-direction: column;
   min-width: 260px;
 }
-
+.input-row.color {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 #color {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -170,101 +225,35 @@ button {
   border: none;
   cursor: pointer;
 }
-
-#contact-modal menu {
-  display: flex;
-  justify-content: end;
-  gap: 20px;
-}
-
 #color::-webkit-color-swatch {
   border-radius: 5px;
   border: #1e1e1e solid 1px;
 }
-
-.input-row.color {
+#contact-modal menu {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
-/* notes modal */
 #notes-modal {
   margin: auto;
   padding: 0px 20px;
   border-radius: 10px;
   border: 1px solid #d7d7d7;
 }
-
 #add-notes-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 30px;
+  gap: 24px;
+  padding: 34px;
 }
-
 #add-notes-form div:nth-of-type(1) {
   display: flex;
   flex-direction: column;
   min-width: 260px;
 }
-
 #add-notes-form div:nth-of-type(2) {
   display: flex;
-  justify-content: end;
-  gap: 20px;
-}
-
-.submit-btn {
-  all: unset;
-  background-color: var(--accent);
-  cursor: pointer;
-  padding: 10px 20px;
-  color: white;
-  border-radius: 5px;
-}
-
-svg {
-  width: 20px;
-  height: 20px;
-}
-
-.open-modal.button:hover {
-  background-color: #1900be;
-}
-
-.update-today:hover #Layer_1 {
-  fill: rgb(1, 201, 1);
-  transition: all 150ms ease-in-out;
-}
-
-.delete-contact:hover {
-  fill: grey;
-  transition: all 150ms ease-in-out;
-}
-.edit-contact:hover svg {
-  fill: grey;
-  transition: all 150ms ease-in-out;
-}
-.notes-contact:hover svg {
-  fill: grey;
-  transition: all 150ms ease-in-out;
-}
-
-.favourite:hover svg {
-  opacity: 60%;
-  transition: all 150ms ease-in-out;
-}
-
-.favourite.is-favourite:hover svg {
-  opacity: 60%;
-  transition: all 150ms ease-in-out;
-}
-
-.contact-info-container {
-  display: flex;
-
-  max-width: 300px;
+  justify-content: flex-end;
   gap: 24px;
 }

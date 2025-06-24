@@ -8,64 +8,52 @@
     <script type="module" src="script.js" defer></script>
   </head>
   <body>
-    <nav class="nav"><span>CatchApp</span><a>🤓</a></nav>
-
-    <section class="filters">
-      <div class="input-filters">
-        <button class="button open-modal" id="open-modal">Add</button>
-        <div>
-          <input type="checkbox" disabled />
-          <label style="color: gray">Select</label>
-        </div>
-        <select name="sort" id="contact-sort">
-          <option value="">Select an option</option>
-          <option value="favourite">Sort by favorite</option>
-          <option value="name-asc">Sort by name(asc)</option>
-          <option value="name-desc">Sort by name(desc)</option>
-          <option value="lastContact-asc">Sort by last contacted(asc)</option>
-          <option value="lastContact-desc">Sort by last contacted(desc)</option>
-          <option value="birthdate-asc">Sort by birthdate(asc)</option>
-          <option value="birthdate-desc">Sort by birthdate(desc)</option>
-        </select>
+    <aside>
+      <h2>Catchapp</h2>
+      <div class="home-area">
+        <ul>
+          <li><button>Home</button></li>
+          <li><button>Birthdays</button></li>
+        </ul>
       </div>
-      <div>
-        <input
-          type="search"
-          id="search"
-          placeholder="Search..."
-          aria-label="Search contacts"
-          disabled
-        />
+      <div class="groups-area">
+        <h3>Groups</h3>
+        <form class="make-group-form" id="make-group-form">
+          <label for="makeGroup">Create group: </label
+          ><input id="makeGroup" name="makeGroup" type="text" required />
+          <button id="btnMakeGroup">+</button>
+        </form>
+        <ul id="groups"></ul>
       </div>
-    </section>
+    </aside>
+    <div class="main-area">
+      <nav class="nav"><span>All</span><a>🤓</a></nav>
+      <main>
+        <div class="contact-container">
+          <section class="filters">
+            <div class="input-filters">
+              <button class="button open-modal" id="open-modal">Add</button>
 
-    <div class="contact-list">
-      <!-- <div class="contact" id="132145">
-        <div class="contact-info">
-          <div class="bg-color">
-            <span>M</span>
-          </div>
-          <div>
-            <span>Mark Lajom</span>
-            <span>Birthday: 09/02/2003</span>
-          </div>
-        </div>
-        <div class="contact-options">
-          <div class="last-contact">
-            <label>Last Contacted:</label>
-            <input type="date" />
-            <button class="update-today">✅</button>
-          </div>
-          <div class="contact-edit">
-            <button>note</button>
-            <div>
-              <button class="favourite">fav</button>
-              <button class="edit-contact">edit</button>
-              <button class="delete-contact">remove</button>
+              <select name="sort" id="contact-sort">
+                <option value="">Sort by</option>
+                <option value="favourite">Sort by favorite</option>
+                <option value="name-asc">Sort by name(asc)</option>
+                <option value="name-desc">Sort by name(desc)</option>
+                <option value="lastContact-asc">
+                  Sort by last contacted(asc)
+                </option>
+                <option value="lastContact-desc">
+                  Sort by last contacted(desc)
+                </option>
+                <option value="birthdate-asc">Sort by birthdate(asc)</option>
+                <option value="birthdate-desc">Sort by birthdate(desc)</option>
+              </select>
             </div>
-          </div>
+          </section>
+
+          <div class="contact-list"></div>
         </div>
-      </div> -->
+      </main>
     </div>
 
     <!-- MODALS -->
@@ -89,11 +77,15 @@
         </div>
         <div class="input-row">
           <label for="birthdate">Birthdate:</label
-          ><input id="birthdate" name="birthdate" type="date" required />
+          ><input id="birthdate" name="birthdate" type="date" />
         </div>
         <div class="input-row">
           <label for="lastContact">Last Contacted: </label
           ><input id="lastContact" name="lastContact" type="date" required />
+        </div>
+        <div class="input-row">
+          <label for="groupSelect">Group: </label
+          ><select id="groupSelect" name="group" type="date"></select>
         </div>
         <div class="input-row">
           <label for="notes">Notes: </label

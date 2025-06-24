@@ -1,9 +1,4 @@
-import { checkSVG } from "./svg/check.js";
-import { oLStickyNoteSVG } from "./svg/notes.js";
-import { oLHeartSVG } from "./svg/fav.js";
-import { oLEditSVG } from "./svg/edit.js";
-import { removeSVG } from "./svg/remove.js";
-import ContactRow from "./components/ContactRow.js";
+import ContactRow from "../modules/ContactRow.js";
 
 const modal = document.getElementById("contact-modal");
 const openButton = document.getElementById("open-modal");
@@ -14,12 +9,12 @@ const contactList = document.querySelector(".contact-list");
 const notesModal = document.getElementById("notes-modal");
 const closeNotesButton = document.getElementById("close-notes-modal");
 const contactSortSelect = document.getElementById("contact-sort");
+const groupsList = document.getElementById("groups");
+const addGroupForm = document.getElementById("make-group-form");
 
-// function getAllContacts() {
-//   return document.querySelectorAll(".contact");
-// }
+document.querySelectorAll("dialog").forEach((dialog) => dialog.close());
 
-// const currentContacts = getAllContacts();
+let groupsArray = JSON.parse(localStorage.getItem("groupsArray")) || [];
 
 let contactArray = JSON.parse(localStorage.getItem("contactArray")) || [];
 
@@ -62,43 +57,6 @@ function addContact(e) {
   addContactForm.reset();
   modal.close();
 }
-
-// function populateList(contacts) {
-//   contactList.innerHTML = contacts
-//     .map(
-//       (contact) => `<div class="contact" id="${contact.id}">
-//                       <div class="contact-info">
-//                         <div class="bg-color" style="background-color: ${
-//                           contact.backgroundColor
-//                         }">
-//                           <span>${contact.firstName.charAt(0)}</span>
-//                         </div>
-//                         <div class="personal-info">
-//                           <span>${contact.firstName} ${contact.lastName}</span>
-//                           <span>Birthdate: ${contact.birthdate}</span>
-//                         </div>
-//                       </div>
-//                       <div class="contact-options">
-//                         <div class="last-contact">
-//                        <span>Last Contacted: ${contact.lastContact}</span>
-
-//                           <button class="update-today" title="Catch up today">${checkSVG}</button>
-//                         </div>
-//                            <div class="contact-edit">
-//                           <button class="notes-contact">${oLStickyNoteSVG}</button>
-//                           <div class="contact-operations">
-//                             <button class="favourite ${
-//                               contact.isFavourite ? "is-favourite" : ""
-//                             }">${oLHeartSVG}</button>
-//                             <button class="edit-contact">${oLEditSVG}</button>
-//                             <button class="delete-contact">${removeSVG}</button>
-//                           </div>
-//                         </div>
-//                       </div>
-//                     </div>`
-//     )
-//     .join("");
-// }
 
 function populateList(contacts) {
   contactList.innerHTML = "";
@@ -278,7 +236,35 @@ function sortContactArray(e) {
   } else contactArray = sortedArray;
 }
 
+function populateGroup(groups) {
+  groupsList.innerHTML = "";
+
+  groups.forEach((group) => {
+    const groupItem = document.createElement("li");
+    const groupBtn = document.createElement("button");
+    groupBtn.textContent = group;
+
+    groupItem.appendChild(groupBtn);
+    groupsList.appendChild(groupItem);
+  });
+}
+
+function addGroup(e) {
+  e.preventDefault();
+  const newGroup = e.target.makeGroup.value.trim();
+
+  if (!newGroup) return;
+  if (groupsArray.includes(newGroup)) return;
+
+  groupsArray.push(newGroup);
+  localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
+  populateGroup(groupsArray);
+  e.target.reset(); // clear input field
+}
+
+populateGroup(groupsArray);
 populateList(contactArray);
+addGroupForm.addEventListener("submit", addGroup);
 contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
 notesModal.addEventListener("submit", addNotes);

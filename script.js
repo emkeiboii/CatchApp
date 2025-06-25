@@ -48,6 +48,7 @@ function addContact(e) {
       editContact.lastName = addContactForm.lastName.value;
       editContact.birthdate = addContactForm.birthdate.value;
       editContact.lastContact = addContactForm.lastContact.value;
+      editContact.group = addContactForm.groupSelect.value;
       editContact.notes = addContactForm.notes.value;
     }
 
@@ -60,6 +61,7 @@ function addContact(e) {
       lastName: addContactForm.lastName.value,
       birthdate: addContactForm.birthdate.value,
       lastContact: addContactForm.lastContact.value,
+      group: addContactForm.groupSelect.value,
       notes: addContactForm.notes.value,
       isFavourite: false,
     };
@@ -286,8 +288,16 @@ function navigateHome() {
 }
 
 function navigateGroup(e) {
+  console.log(e.target.id);
+  const selectedGroupId = e.target.id;
+  currPage = selectedGroupId;
   pageName.textContent = e.target.textContent;
-  currPage = e.target.id;
+
+  const groupContacts = contactArray.filter(
+    (contact) => contact.group === selectedGroupId
+  );
+
+  populateList(groupContacts);
 }
 
 function renderGroupOptions(array) {
@@ -296,7 +306,7 @@ function renderGroupOptions(array) {
     const groupOption = document.createElement("option");
     groupOption.id = group.id;
     groupOption.textContent = group.groupName;
-    groupOption.value = group.groupName;
+    groupOption.value = group.id;
 
     groupSelect.append(groupOption);
   });

@@ -12,8 +12,7 @@
       <h2>Catchapp</h2>
       <div class="home-area">
         <ul>
-          <li><button>Home</button></li>
-          <li><button>Birthdays</button></li>
+          <li><button id="home">Home</button></li>
         </ul>
       </div>
       <div class="groups-area">
@@ -27,7 +26,7 @@
       </div>
     </aside>
     <div class="main-area">
-      <nav class="nav"><span>All</span><a>🤓</a></nav>
+      <nav class="nav"><span id="current-page"></span><a>🤓</a></nav>
       <main>
         <div class="contact-container">
           <section class="filters">
@@ -85,7 +84,7 @@
         </div>
         <div class="input-row">
           <label for="groupSelect">Group: </label
-          ><select id="groupSelect" name="group" type="date"></select>
+          ><select id="groupSelect" name="groupSelect"></select>
         </div>
         <div class="input-row">
           <label for="notes">Notes: </label

@@ -11,12 +11,26 @@ const closeNotesButton = document.getElementById("close-notes-modal");
 const contactSortSelect = document.getElementById("contact-sort");
 const groupsList = document.getElementById("groups");
 const addGroupForm = document.getElementById("make-group-form");
+const pageName = document.getElementById("current-page");
+const homeButton = document.getElementById("home");
 
 document.querySelectorAll("dialog").forEach((dialog) => dialog.close());
 
-let groupsArray = JSON.parse(localStorage.getItem("groupsArray")) || [];
+let groupsArray = JSON.parse(localStorage.getItem("groupsArray")) || [
+  { id: "family", groupName: "Family" },
+  { id: "closeFriends", groupName: "Close Friends" },
+];
 
 let contactArray = JSON.parse(localStorage.getItem("contactArray")) || [];
+
+let currPage = "Home";
+
+class Group {
+  constructor({ id, groupName }) {
+    this.id = id || Date.now();
+    this.groupName = groupName;
+  }
+}
 
 function addContact(e) {
   e.preventDefault();
@@ -236,34 +250,63 @@ function sortContactArray(e) {
   } else contactArray = sortedArray;
 }
 
-function populateGroup(groups) {
-  groupsList.innerHTML = "";
-
-  groups.forEach((group) => {
-    const groupItem = document.createElement("li");
-    const groupBtn = document.createElement("button");
-    groupBtn.textContent = group;
-
-    groupItem.appendChild(groupBtn);
-    groupsList.appendChild(groupItem);
-  });
-}
-
 function addGroup(e) {
   e.preventDefault();
-  const newGroup = e.target.makeGroup.value.trim();
+  console.log(e.target.makeGroup.value);
+  const newGroup = new Group({
+    groupName: e.target.makeGroup.value,
+  });
 
   if (!newGroup) return;
   if (groupsArray.includes(newGroup)) return;
 
   groupsArray.push(newGroup);
   localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
-  populateGroup(groupsArray);
+  populateGroupList(groupsArray);
   e.target.reset(); // clear input field
 }
 
-populateGroup(groupsArray);
+function populateGroupList(groups) {
+  groupsList.innerHTML = "";
+
+  groups.forEach((group) => {
+    const groupItem = document.createElement("li");
+    const groupBtn = document.createElement("button");
+    groupBtn.id = group.id;
+    groupBtn.textContent = group.groupName;
+
+    groupItem.appendChild(groupBtn);
+    groupsList.appendChild(groupItem);
+  });
+}
+
+function navigateHome() {
+  pageName.textContent = "Home";
+  populateList(contactArray);
+}
+
+function navigateGroup(e) {
+  pageName.textContent = e.target.textContent;
+  currPage = e.target.id;
+}
+
+function renderGroupOptions(array) {
+  const groupSelect = document.getElementById("groupSelect");
+  array.forEach((group) => {
+    const groupOption = document.createElement("option");
+    groupOption.id = group.id;
+    groupOption.textContent = group.groupName;
+    groupOption.value = group.groupName;
+
+    groupSelect.append(groupOption);
+  });
+}
+
+renderGroupOptions(groupsArray);
+navigateHome();
+populateGroupList(groupsArray);
 populateList(contactArray);
+groupsList.addEventListener("click", navigateGroup);
 addGroupForm.addEventListener("submit", addGroup);
 contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
@@ -272,3 +315,4 @@ closeNotesButton.addEventListener("click", () => notesModal.close());
 openButton.addEventListener("click", () => modal.showModal());
 closeButton.addEventListener("click", () => modal.close());
 contactSortSelect.addEventListener("change", sortContactArray);
+homeButton.addEventListener("click", navigateHome);

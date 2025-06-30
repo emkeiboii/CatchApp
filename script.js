@@ -16,14 +16,32 @@ const homeButton = document.getElementById("home");
 
 document.querySelectorAll("dialog").forEach((dialog) => dialog.close());
 
-let groupsArray = JSON.parse(localStorage.getItem("groupsArray")) || [
-  { id: "family", groupName: "Family" },
-  { id: "closeFriends", groupName: "Close Friends" },
-];
+let groupsArray = JSON.parse(localStorage.getItem("groupsArray"));
 
 let contactArray = JSON.parse(localStorage.getItem("contactArray")) || [];
 
-let currPage = "Home";
+let currPage = 0;
+
+if (!groupsArray) {
+  groupsArray = [
+    { id: 1, groupName: "Family" },
+    { id: 2, groupName: "Close Friends" },
+  ];
+  localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
+}
+
+function getCurrPageContactArray(id) {
+  console.log(typeof currPage);
+  if (currPage === 0) {
+    return contactArray;
+  } else {
+    const currPageContactArray = contactArray.filter(
+      (contact) => parseInt(contact.group) === id
+    );
+    console.log(currPageContactArray);
+    return currPageContactArray;
+  }
+}
 
 class Group {
   constructor({ id, groupName }) {
@@ -69,12 +87,12 @@ function addContact(e) {
   }
 
   localStorage.setItem("contactArray", JSON.stringify(contactArray));
-  populateList(contactArray);
+  navigateTo(addContactForm.groupSelect.value);
   addContactForm.reset();
   modal.close();
 }
 
-function populateList(contacts) {
+function populateContactList(contacts) {
   contactList.innerHTML = "";
   contacts.map((contact) => contactList.appendChild(ContactRow(contact)));
 }
@@ -109,6 +127,7 @@ function handleOption(e) {
     addContactForm.lastName.value = contact.lastName;
     addContactForm.birthdate.value = contact.birthdate;
     addContactForm.lastContact.value = contact.lastContact;
+    addContactForm.groupSelect.value = contact.group;
     addContactForm.notes.value = contact.notes;
 
     addContactForm.dataset.editingId = contact.id;
@@ -154,16 +173,17 @@ function addNotes(e) {
     editContact.notes = addNotesForm.notesX.value;
   }
 
-  delete addContactForm.dataset.editingId;
+  delete addNotesForm.dataset.editingId;
   localStorage.setItem("contactArray", JSON.stringify(contactArray));
-  populateList(contactArray);
+  populateContactList(getCurrPageContactArray());
   addNotesForm.reset();
   notesModal.close();
 }
 
 function sortContactArray(e) {
   let sortOption = e.target.value;
-  let sortedArray = contactArray;
+  let sortedArray = getCurrPageContactArray(currPage);
+  console.log(sortedArray);
 
   if (sortOption === "favourite") {
     sortedArray.sort((a, b) => {
@@ -176,7 +196,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "name-asc") {
     sortedArray.sort((a, b) => {
       if (a.firstName < b.firstName) {
@@ -188,7 +208,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "name-desc") {
     sortedArray.sort((a, b) => {
       if (a.firstName > b.firstName) {
@@ -200,7 +220,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "lastContact-asc") {
     sortedArray.sort((a, b) => {
       if (a.lastContact > b.lastContact) {
@@ -212,7 +232,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "lastContact-desc") {
     sortedArray.sort((a, b) => {
       if (a.lastContact < b.lastContact) {
@@ -224,7 +244,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "birthdate-asc") {
     sortedArray.sort((a, b) => {
       if (a.birthdate < b.birthdate) {
@@ -236,7 +256,7 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
+    populateContactList(sortedArray);
   } else if (sortOption === "birthdate-desc") {
     sortedArray.sort((a, b) => {
       if (a.birthdate > b.birthdate) {
@@ -248,23 +268,28 @@ function sortContactArray(e) {
       }
     });
 
-    populateList(sortedArray);
-  } else contactArray = sortedArray;
+    populateContactList(sortedArray);
+  }
 }
 
 function addGroup(e) {
   e.preventDefault();
-  console.log(e.target.makeGroup.value);
+
   const newGroup = new Group({
+    id: Date.now(),
     groupName: e.target.makeGroup.value,
   });
 
-  if (!newGroup) return;
-  if (groupsArray.includes(newGroup)) return;
+  if (!e.target.makeGroup.value.trim()) return;
+  if (groupsArray.some((group) => group.groupName === newGroup.groupName))
+    return;
 
   groupsArray.push(newGroup);
   localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
   populateGroupList(groupsArray);
+
+  renderGroupOptions(groupsArray);
+
   e.target.reset(); // clear input field
 }
 
@@ -283,25 +308,32 @@ function populateGroupList(groups) {
 }
 
 function navigateHome() {
+  currPage = 0;
   pageName.textContent = "Home";
-  populateList(contactArray);
+  populateContactList(getCurrPageContactArray());
+}
+
+function navigateTo(groupId) {
+  currPage = parseInt(groupId);
+
+  const selectedGroup = groupsArray.find((group) => group.id === currPage);
+  console.log(selectedGroup);
+
+  pageName.textContent = selectedGroup.groupName || "Home";
+
+  populateContactList(getCurrPageContactArray(currPage));
 }
 
 function navigateGroup(e) {
-  console.log(e.target.id);
-  const selectedGroupId = e.target.id;
-  currPage = selectedGroupId;
-  pageName.textContent = e.target.textContent;
-
-  const groupContacts = contactArray.filter(
-    (contact) => contact.group === selectedGroupId
-  );
-
-  populateList(groupContacts);
+  if (!e.target.id || e.target.id === "groups") return;
+  contactSortSelect.value = "default";
+  navigateTo(e.target.id);
 }
 
 function renderGroupOptions(array) {
   const groupSelect = document.getElementById("groupSelect");
+  groupSelect.innerHTML = "";
+
   array.forEach((group) => {
     const groupOption = document.createElement("option");
     groupOption.id = group.id;
@@ -315,12 +347,12 @@ function renderGroupOptions(array) {
 renderGroupOptions(groupsArray);
 navigateHome();
 populateGroupList(groupsArray);
-populateList(contactArray);
+populateContactList(contactArray);
 groupsList.addEventListener("click", navigateGroup);
 addGroupForm.addEventListener("submit", addGroup);
 contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
-notesModal.addEventListener("submit", addNotes);
+addNotesForm.addEventListener("submit", addNotes);
 closeNotesButton.addEventListener("click", () => notesModal.close());
 openButton.addEventListener("click", () => modal.showModal());
 closeButton.addEventListener("click", () => modal.close());

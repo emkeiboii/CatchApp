@@ -1,5 +1,9 @@
 import ContactRow from "../modules/ContactRow.js";
+import { removeSVG } from "./svg/remove.js";
 
+// =============================================================================
+// DOM ELEMENT REFERENCES
+// =============================================================================
 const modal = document.getElementById("contact-modal");
 const openButton = document.getElementById("open-modal");
 const closeButton = document.getElementById("close-modal");
@@ -14,35 +18,21 @@ const addGroupForm = document.getElementById("make-group-form");
 const pageName = document.getElementById("current-page");
 const homeButton = document.getElementById("home");
 
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
 document.querySelectorAll("dialog").forEach((dialog) => dialog.close());
 
-let groupsArray = JSON.parse(localStorage.getItem("groupsArray"));
-
+// =============================================================================
+// STATE VARIABLES
+// =============================================================================
+let groupsArray = JSON.parse(localStorage.getItem("groupsArray")) || [];
 let contactArray = JSON.parse(localStorage.getItem("contactArray")) || [];
-
 let currPage = 0;
 
-if (!groupsArray) {
-  groupsArray = [
-    { id: 1, groupName: "Family" },
-    { id: 2, groupName: "Close Friends" },
-  ];
-  localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
-}
-
-function getCurrPageContactArray(id) {
-  console.log(typeof currPage);
-  if (currPage === 0) {
-    return contactArray;
-  } else {
-    const currPageContactArray = contactArray.filter(
-      (contact) => parseInt(contact.group) === id
-    );
-    console.log(currPageContactArray);
-    return currPageContactArray;
-  }
-}
-
+// =============================================================================
+// CLASSES
+// =============================================================================
 class Group {
   constructor({ id, groupName }) {
     this.id = id || Date.now();
@@ -50,6 +40,23 @@ class Group {
   }
 }
 
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
+function getCurrPageContactArray(id) {
+  if (currPage === 0) {
+    return contactArray;
+  } else {
+    const currPageContactArray = contactArray.filter(
+      (contact) => parseInt(contact.group) === id
+    );
+    return currPageContactArray;
+  }
+}
+
+// =============================================================================
+// CONTACT MANAGEMENT FUNCTIONS
+// =============================================================================
 function addContact(e) {
   e.preventDefault();
 
@@ -175,15 +182,17 @@ function addNotes(e) {
 
   delete addNotesForm.dataset.editingId;
   localStorage.setItem("contactArray", JSON.stringify(contactArray));
-  populateContactList(getCurrPageContactArray());
+  populateContactList(getCurrPageContactArray(currPage));
   addNotesForm.reset();
   notesModal.close();
 }
 
+// =============================================================================
+// SORTING FUNCTIONS
+// =============================================================================
 function sortContactArray(e) {
   let sortOption = e.target.value;
   let sortedArray = getCurrPageContactArray(currPage);
-  console.log(sortedArray);
 
   if (sortOption === "favourite") {
     sortedArray.sort((a, b) => {
@@ -272,6 +281,9 @@ function sortContactArray(e) {
   }
 }
 
+// =============================================================================
+// GROUP MANAGEMENT FUNCTIONS
+// =============================================================================
 function addGroup(e) {
   e.preventDefault();
 
@@ -299,35 +311,33 @@ function populateGroupList(groups) {
   groups.forEach((group) => {
     const groupItem = document.createElement("li");
     const groupBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
     groupBtn.id = group.id;
     groupBtn.textContent = group.groupName;
+    removeBtn.classList.add("remove-button");
+    removeBtn.innerHTML = removeSVG;
 
-    groupItem.appendChild(groupBtn);
     groupsList.appendChild(groupItem);
+    groupItem.appendChild(groupBtn);
+    groupItem.appendChild(removeBtn);
   });
 }
 
-function navigateHome() {
-  currPage = 0;
-  pageName.textContent = "Home";
-  populateContactList(getCurrPageContactArray());
-}
+function deleteGroup(id) {
+  const idToDelete = parseInt(id);
+  if (
+    window.confirm(
+      "Are you sure you want to delete this group, and its content?"
+    )
+  ) {
+    groupsArray = groupsArray.filter((group) => group.id !== idToDelete);
+    localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
+    populateGroupList(groupsList);
 
-function navigateTo(groupId) {
-  currPage = parseInt(groupId);
-
-  const selectedGroup = groupsArray.find((group) => group.id === currPage);
-  console.log(selectedGroup);
-
-  pageName.textContent = selectedGroup.groupName || "Home";
-
-  populateContactList(getCurrPageContactArray(currPage));
-}
-
-function navigateGroup(e) {
-  if (!e.target.id || e.target.id === "groups") return;
-  contactSortSelect.value = "default";
-  navigateTo(e.target.id);
+    if (currPage === id) {
+      navigateHome();
+    }
+  }
 }
 
 function renderGroupOptions(array) {
@@ -344,11 +354,47 @@ function renderGroupOptions(array) {
   });
 }
 
-renderGroupOptions(groupsArray);
-navigateHome();
-populateGroupList(groupsArray);
-populateContactList(contactArray);
-groupsList.addEventListener("click", navigateGroup);
+// =============================================================================
+// NAVIGATION FUNCTIONS
+// =============================================================================
+function navigateHome() {
+  currPage = 0;
+  pageName.textContent = "Home";
+  populateContactList(getCurrPageContactArray(currPage));
+}
+
+function navigateTo(groupId) {
+  currPage = parseInt(groupId);
+
+  const selectedGroup = groupsArray.find((group) => group.id === currPage);
+  console.log(selectedGroup);
+
+  pageName.textContent = selectedGroup.groupName || "Home";
+
+  populateContactList(getCurrPageContactArray(currPage));
+}
+
+// =============================================================================
+// EVENT LISTENERS
+// =============================================================================
+groupsList.addEventListener(
+  "click",
+  groupsList.addEventListener("click", (e) => {
+    if (
+      e.target.classList.contains("remove-button") ||
+      e.target.closest(".remove-button")
+    ) {
+      const groupId = e.target.closest("li").querySelector("button").id;
+      deleteGroup(groupId);
+      return;
+    }
+
+    if (!e.target.id || e.target.id === "groups") return;
+    contactSortSelect.value = "default";
+    navigateTo(e.target.id);
+  })
+);
+
 addGroupForm.addEventListener("submit", addGroup);
 contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
@@ -358,3 +404,11 @@ openButton.addEventListener("click", () => modal.showModal());
 closeButton.addEventListener("click", () => modal.close());
 contactSortSelect.addEventListener("change", sortContactArray);
 homeButton.addEventListener("click", navigateHome);
+
+// =============================================================================
+// INITIALIZATION CALLS
+// =============================================================================
+renderGroupOptions(groupsArray);
+navigateHome();
+populateGroupList(groupsArray);
+populateContactList(contactArray);

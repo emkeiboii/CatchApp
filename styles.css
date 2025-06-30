@@ -146,6 +146,19 @@ main {
   max-width: 300px;
   gap: 24px;
 }
+/* ─────────────── GROUPS ─────────────── */
+#groups {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#groups > * {
+  display: flex;
+  justify-content: space-between;
+}
 
 /* ─────────────── BUTTONS ─────────────── */
 button {

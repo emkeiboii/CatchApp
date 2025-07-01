@@ -55,7 +55,7 @@ export default function ContactRow({
     console.log(countdown.isBirthdayToday);
     span3.textContent = countdown.isBirthdayToday
       ? "Wish them happy birthday!"
-      : `${countdown.months} months and ${countdown.days} days until your birthday!`;
+      : `${countdown.months}m and ${countdown.days}d until ${firstName}'s birthday!`;
     personalInfo.appendChild(span3);
   }
 

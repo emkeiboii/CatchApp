@@ -17,6 +17,7 @@ const groupsList = document.getElementById("groups");
 const addGroupForm = document.getElementById("make-group-form");
 const pageName = document.getElementById("current-page");
 const homeButton = document.getElementById("home");
+const formColorPicker = document.getElementById("color");
 
 // =============================================================================
 // INITIALIZATION
@@ -52,6 +53,11 @@ function getCurrPageContactArray(id) {
     );
     return currPageContactArray;
   }
+}
+
+function getColor() {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  formColorPicker.value = "#" + randomColor;
 }
 
 // =============================================================================
@@ -405,7 +411,10 @@ contactList.addEventListener("click", handleOption);
 addContactForm.addEventListener("submit", addContact);
 addNotesForm.addEventListener("submit", addNotes);
 closeNotesButton.addEventListener("click", () => notesModal.close());
-openButton.addEventListener("click", () => modal.showModal());
+openButton.addEventListener("click", () => {
+  getColor();
+  modal.showModal();
+});
 closeButton.addEventListener("click", () => modal.close());
 contactSortSelect.addEventListener("change", sortContactArray);
 homeButton.addEventListener("click", navigateHome);

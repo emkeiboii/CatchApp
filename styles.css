@@ -160,6 +160,11 @@ main {
   justify-content: space-between;
 }
 
+.group-item button:nth-of-type(1) {
+  width: 100%;
+  background-color: #f6f6f6;
+}
+
 /* ─────────────── BUTTONS ─────────────── */
 button {
   all: unset;
@@ -199,6 +204,11 @@ svg {
 .notes-contact:hover svg {
   fill: grey;
   transition: all 150ms ease-in-out;
+}
+
+.notes-contact svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ─────────────── MODALS ─────────────── */

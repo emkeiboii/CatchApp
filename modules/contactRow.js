@@ -3,6 +3,7 @@ import { oLEditSVG } from "../svg/edit.js";
 import { oLHeartSVG } from "../svg/fav.js";
 import { oLStickyNoteSVG } from "../svg/notes.js";
 import { removeSVG } from "../svg/remove.js";
+import calculateDaysFromPresent from "../utility/calculateBirthday.js";
 
 export default function ContactRow({
   id,
@@ -13,6 +14,8 @@ export default function ContactRow({
   birthdate,
   lastContact,
 }) {
+  const countdown = calculateDaysFromPresent(birthdate);
+
   const contact = document.createElement("div");
   contact.classList.add("contact");
   contact.id = id;
@@ -37,8 +40,7 @@ export default function ContactRow({
   span1.textContent = `${firstName} ${lastName}`;
 
   const span2 = document.createElement("span");
-  span2.textContent = `Birthdate : ${birthdate}`;
-
+  span2.textContent = `Birthdate : ${birthdate ? birthdate : "Missing"}`;
   contact.appendChild(contactInfoContainer);
   contactInfoContainer.appendChild(contactInfo);
   contactInfoContainer.appendChild(personalInfo);
@@ -48,6 +50,14 @@ export default function ContactRow({
 
   personalInfo.appendChild(span1);
   personalInfo.appendChild(span2);
+  if (birthdate) {
+    const span3 = document.createElement("span");
+    console.log(countdown.isBirthdayToday);
+    span3.textContent = countdown.isBirthdayToday
+      ? "Wish them happy birthday!"
+      : `${countdown.months} months and ${countdown.days} days until your birthday!`;
+    personalInfo.appendChild(span3);
+  }
 
   const contactOptions = document.createElement("div");
   contactOptions.classList.add("contact-options");

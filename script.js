@@ -94,7 +94,7 @@ function addContact(e) {
   }
 
   localStorage.setItem("contactArray", JSON.stringify(contactArray));
-  navigateTo(addContactForm.groupSelect.value);
+  navigateTo(addContactForm.groupSelect?.value || 0);
   addContactForm.reset();
   modal.close();
 }
@@ -312,6 +312,7 @@ function populateGroupList(groups) {
     const groupItem = document.createElement("li");
     const groupBtn = document.createElement("button");
     const removeBtn = document.createElement("button");
+    groupItem.classList.add("group-item");
     groupBtn.id = group.id;
     groupBtn.textContent = group.groupName;
     removeBtn.classList.add("remove-button");
@@ -331,10 +332,15 @@ function deleteGroup(id) {
     )
   ) {
     groupsArray = groupsArray.filter((group) => group.id !== idToDelete);
+    contactArray = contactArray.filter(
+      (contact) => parseInt(contact.group) !== idToDelete
+    );
     localStorage.setItem("groupsArray", JSON.stringify(groupsArray));
-    populateGroupList(groupsList);
+    localStorage.setItem("contactArray", JSON.stringify(contactArray));
+    populateContactList(contactArray);
+    populateGroupList(groupsArray);
 
-    if (currPage === id) {
+    if (currPage === idToDelete) {
       navigateHome();
     }
   }
@@ -367,9 +373,8 @@ function navigateTo(groupId) {
   currPage = parseInt(groupId);
 
   const selectedGroup = groupsArray.find((group) => group.id === currPage);
-  console.log(selectedGroup);
 
-  pageName.textContent = selectedGroup.groupName || "Home";
+  pageName.textContent = selectedGroup?.groupName || "Home";
 
   populateContactList(getCurrPageContactArray(currPage));
 }

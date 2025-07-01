@@ -41,6 +41,7 @@ export default function ContactRow({
 
   const span2 = document.createElement("span");
   span2.textContent = `Birthdate : ${birthdate ? birthdate : "Missing"}`;
+
   contact.appendChild(contactInfoContainer);
   contactInfoContainer.appendChild(contactInfo);
   contactInfoContainer.appendChild(personalInfo);
@@ -52,10 +53,18 @@ export default function ContactRow({
   personalInfo.appendChild(span2);
   if (birthdate) {
     const span3 = document.createElement("span");
-    console.log(countdown.isBirthdayToday);
     span3.textContent = countdown.isBirthdayToday
       ? "Wish them happy birthday!"
-      : `${countdown.months}m and ${countdown.days}d until ${firstName}'s birthday!`;
+      : countdown.months === 0
+      ? `${countdown.days}days until ${firstName}'s birthday!`
+      : `${countdown.months}months until ${firstName}'s birthday!`;
+    if (countdown.months > 1) {
+      span3.classList.add("far");
+    } else if (countdown.months <= 0 && countdown.days <= 7) {
+      span3.classList.add("close");
+    } else {
+      span3.classList.add("medium");
+    }
     personalInfo.appendChild(span3);
   }
 

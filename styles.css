@@ -30,13 +30,17 @@ aside {
 /* ─────────────── NAVIGATION ─────────────── */
 .nav {
   flex: 0 0 auto;
-  background-color: var(--accent);
-  color: white;
+  background-color: #e4e4e4;
+  color: var(--accent);
   padding: 1rem;
-  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#current-page {
+  font-weight: 800;
+  font-size: 24px;
 }
 
 /* ─────────────── MAIN ─────────────── */
@@ -118,6 +122,26 @@ main {
 .personal-info span:nth-of-type(2) {
   font-size: 0.9rem;
 }
+.personal-info span:nth-of-type(3) {
+  font-size: 0.9rem;
+}
+
+.personal-info span.far {
+  text-decoration: underline;
+  text-decoration-color: rgb(255, 111, 111);
+  text-decoration-thickness: 3px;
+}
+.personal-info span.medium {
+  text-decoration: underline;
+  text-decoration-color: rgb(255, 206, 116);
+  text-decoration-thickness: 3px;
+}
+.personal-info span.close {
+  text-decoration: underline;
+  text-decoration-color: rgb(123, 255, 123);
+  text-decoration-thickness: 3px;
+}
+
 .contact-options {
   display: flex;
   width: 100%;
@@ -141,9 +165,15 @@ main {
 }
 .contact-info-container {
   display: flex;
-  max-width: 300px;
+
   gap: 24px;
 }
+/* ─────────────── HOME ─────────────── */
+
+aside {
+  background-color: #f6f6f6;
+}
+
 /* ─────────────── GROUPS ─────────────── */
 #groups {
   margin-top: 20px;
@@ -158,9 +188,27 @@ main {
   justify-content: space-between;
 }
 
+.group-item button {
+  background-color: #ebebeb;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.group-item:hover button:not(.remove-button) {
+  background-color: #e6e6e6;
+  transition: all 150ms ease-in-out;
+}
+
 .group-item button:nth-of-type(1) {
   width: 100%;
-  background-color: #f6f6f6;
+}
+
+.remove-button svg {
+  fill: red;
+  height: 18px;
+}
+.remove-button:hover svg {
+  fill: rgb(167, 0, 0);
+  transition: all 150ms ease-in-out;
 }
 
 /* ─────────────── BUTTONS ─────────────── */

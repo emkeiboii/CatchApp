@@ -8,10 +8,33 @@
 }
 
 :root {
-  --accent: #2200ff;
   --text: #1e1e1e;
-  --grey: #b3b3b3;
-  --light-grey: #e4e4e4;
+  --black: rgba(0, 0, 0, 1);
+  --white: rgba(255, 255, 255, 1);
+  --neutral-100: rgb(250, 250, 250);
+  --neutral-150: rgba(244, 244, 244, 1);
+  --neutral-200: rgba(233, 233, 233, 1);
+  --neutral-250: rgba(221, 221, 221, 1);
+  --neutral-300: rgba(210, 210, 210, 1);
+  --neutral-350: rgba(188, 188, 188, 1);
+  --neutral-400: rgba(165, 165, 165, 1);
+  --neutral-450: rgba(143, 143, 143, 1);
+  --neutral-500: rgba(118, 118, 118, 1);
+  --neutral-550: rgba(92, 92, 92, 1);
+  --neutral-600: rgba(67, 67, 67, 1);
+  --neutral-650: rgba(54, 54, 54, 1);
+  --neutral-700: rgba(41, 41, 41, 1);
+  --neutral-800: rgba(28, 28, 28, 1);
+  --neutral-900: rgba(16, 16, 16, 1);
+  --brand-100: rgba(204, 214, 255, 1);
+  --brand-200: rgba(153, 173, 255, 1);
+  --brand-300: rgba(102, 133, 255, 1);
+  --brand-400: rgba(51, 92, 255, 1);
+  --brand-500: rgba(0, 51, 255, 1);
+  --brand-600: rgba(0, 41, 204, 1);
+  --brand-700: rgba(0, 31, 153, 1);
+  --brand-800: rgba(0, 20, 102, 1);
+  --brand-900: rgba(0, 10, 51, 1);
 }
 
 /* ─────────────── LAYOUT ─────────────── */
@@ -30,8 +53,8 @@ aside {
 /* ─────────────── NAVIGATION ─────────────── */
 .nav {
   flex: 0 0 auto;
-  background-color: #e4e4e4;
-  color: var(--accent);
+  background-color: var(--neutral-150);
+  color: var(--brand-500);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -48,6 +71,8 @@ main {
   flex: 1 1 auto;
   overflow-y: auto;
   padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .main-area {
@@ -65,21 +90,32 @@ main {
   align-items: center;
 }
 .input-filters {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  gap: 24px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--neutral-200);
 }
+
+.input-filters span {
+  display: flex;
+  justify-content: center;
+}
+
 .open-modal.button {
   all: unset;
-  background-color: var(--accent);
+  background-color: var(--brand-500);
   cursor: pointer;
   padding: 8px 20px;
   color: white;
   border-radius: 5px;
+  width: fit-content;
   transition: all 250ms ease-in-out;
 }
 .open-modal.button:hover {
-  background-color: #1900be;
+  background-color: var(--brand-700);
 }
 
 /* ─────────────── CONTACT LIST ─────────────── */
@@ -88,29 +124,50 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 1200px;
+  width: 100%;
 }
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 30px;
   margin: 0px 24px;
 }
+
 .contact {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  border-radius: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--neutral-200);
 }
+.contact:hover {
+  background-color: var(--neutral-100);
+  cursor: pointer;
+}
+
 .contact-info {
   display: flex;
   align-items: center;
   gap: 24px;
 }
+
+.contact button {
+  padding: 3px 3px 0 3px;
+  border-radius: 4px;
+  transition: 250ms ease-in-out;
+}
+.contact button:hover {
+  background-color: var(--neutral-200);
+}
+
 .bg-color {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
 }
 .personal-info {
   display: flex;
@@ -128,18 +185,18 @@ main {
 
 .personal-info span.far {
   text-decoration: underline;
-  text-decoration-color: rgb(255, 111, 111);
-  text-decoration-thickness: 3px;
+  text-decoration-color: rgba(255, 0, 0, 0.8);
+  text-decoration-thickness: 2px;
 }
 .personal-info span.medium {
   text-decoration: underline;
-  text-decoration-color: rgb(255, 206, 116);
-  text-decoration-thickness: 3px;
+  text-decoration-color: rgba(235, 153, 0, 0.8);
+  text-decoration-thickness: 2px;
 }
 .personal-info span.close {
   text-decoration: underline;
-  text-decoration-color: rgb(123, 255, 123);
-  text-decoration-thickness: 3px;
+  text-decoration-color: rgba(0, 255, 0, 0.8);
+  text-decoration-thickness: 2px;
 }
 
 .contact-options {
@@ -151,14 +208,17 @@ main {
 .last-contact {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
-  fill: white;
+  fill: var(--neutral-100);
 }
 .contact-edit {
   display: flex;
   align-items: center;
+  justify-content: end;
   gap: 32px;
 }
+
 .contact-edit > div {
   display: flex;
   gap: 10px;
@@ -171,7 +231,8 @@ main {
 /* ─────────────── HOME ─────────────── */
 
 aside {
-  background-color: #f6f6f6;
+  background-color: var(--neutral-150);
+  padding: 1rem;
 }
 
 /* ─────────────── GROUPS ─────────────── */
@@ -189,12 +250,12 @@ aside {
 }
 
 .group-item button {
-  background-color: #ebebeb;
+  background-color: var(--neutral-200);
   padding: 8px 12px;
   border-radius: 8px;
 }
 .group-item:hover button:not(.remove-button) {
-  background-color: #e6e6e6;
+  background-color: var(--neutral-250);
   transition: all 150ms ease-in-out;
 }
 
@@ -218,10 +279,10 @@ button {
 }
 .submit-btn {
   all: unset;
-  background-color: var(--accent);
+  background-color: var(--brand-500);
   cursor: pointer;
   padding: 12px 24px;
-  color: white;
+  color: var(--neutral-100);
   border-radius: 5px;
 }
 
@@ -230,11 +291,21 @@ svg {
   width: 22px;
   height: 22px;
 }
-.update-today #Layer_1 {
+
+.update-today.danger {
+  fill: rgba(255, 0, 0);
+}
+
+.update-today.warning {
+  fill: rgb(255, 208, 0);
+}
+
+.update-today.close {
   fill: rgb(28, 170, 0);
 }
-.update-today:hover #Layer_1 {
-  fill: rgb(1, 201, 1);
+
+.update-today:hover {
+  opacity: 60%;
   transition: all 150ms ease-in-out;
 }
 .favourite.is-favourite {
@@ -248,7 +319,7 @@ svg {
 .delete-contact:hover,
 .edit-contact:hover svg,
 .notes-contact:hover svg {
-  fill: grey;
+  fill: var(--neutral-500);
   transition: all 150ms ease-in-out;
 }
 
@@ -266,7 +337,7 @@ svg {
   margin: auto;
   padding: 0px 20px;
   border-radius: 10px;
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--neutral-150);
 }
 .add-contact-form {
   display: flex;
@@ -296,7 +367,7 @@ svg {
 }
 #color::-webkit-color-swatch {
   border-radius: 5px;
-  border: #1e1e1e solid 1px;
+  border: var(--neutral-900) solid 1px;
 }
 #contact-modal menu {
   display: flex;
@@ -308,7 +379,7 @@ svg {
   margin: auto;
   padding: 0px 20px;
   border-radius: 10px;
-  border: 1px solid #d7d7d7;
+  border: 1px solid var(--neutral-150);
 }
 #add-notes-form {
   display: flex;

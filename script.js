@@ -82,7 +82,7 @@ function addContact(e) {
       editContact.group = addContactForm.groupSelect.value;
       editContact.notes = addContactForm.notes.value;
     }
-
+    populateContactList(contactArray);
     delete addContactForm.dataset.editingId;
   } else {
     const contact = {
@@ -97,10 +97,10 @@ function addContact(e) {
       isFavourite: false,
     };
     contactArray.push(contact);
+    navigateTo(addContactForm.groupSelect?.value || 0);
   }
 
   localStorage.setItem("contactArray", JSON.stringify(contactArray));
-  navigateTo(addContactForm.groupSelect?.value || 0);
   addContactForm.reset();
   modal.close();
 }
@@ -163,9 +163,10 @@ function handleOption(e) {
       const dateSpan = contactElement.querySelector(".last-contact span");
       contact.lastContact = formattedDate;
       if (dateSpan) {
-        dateSpan.textContent = `Last Contacted: ${formattedDate}`;
+        dateSpan.textContent = `${formattedDate}`;
       }
       localStorage.setItem("contactArray", JSON.stringify(contactArray));
+      populateContactList(contactArray);
     }
   } else if (notesBtn) {
     notesModal.showModal();
@@ -174,6 +175,7 @@ function handleOption(e) {
     addNotesForm.dataset.editingId = contact.id;
     localStorage.setItem("contactArray", JSON.stringify(contactArray));
   }
+  navigateTo(currPage);
 }
 
 function addNotes(e) {

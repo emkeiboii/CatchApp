@@ -235,6 +235,19 @@ aside {
   padding: 1rem;
 }
 
+.home-area ul li {
+  display: flex;
+  gap: 10px;
+  padding: 4px 8px;
+  background-color: var(--neutral-200);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.home-area img {
+  height: 20px;
+}
+
 /* ─────────────── GROUPS ─────────────── */
 #groups {
   margin-top: 20px;
@@ -249,7 +262,14 @@ aside {
   justify-content: space-between;
 }
 
-.group-item button {
+.group-item {
+  background-color: var(--neutral-200);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* .group-item button {
   background-color: var(--neutral-200);
   padding: 8px 12px;
   border-radius: 8px;
@@ -261,15 +281,19 @@ aside {
 
 .group-item button:nth-of-type(1) {
   width: 100%;
-}
+} */
 
 .remove-button svg {
   fill: red;
-  height: 18px;
+  height: 14px;
 }
 .remove-button:hover svg {
   fill: rgb(167, 0, 0);
   transition: all 150ms ease-in-out;
+}
+
+.make-group-form {
+  display: flex;
 }
 
 /* ─────────────── BUTTONS ─────────────── */

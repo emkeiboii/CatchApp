@@ -321,6 +321,7 @@ function populateGroupList(groups) {
     const groupBtn = document.createElement("button");
     const removeBtn = document.createElement("button");
     groupItem.classList.add("group-item");
+    groupBtn.classList.add("group-name-button");
     groupBtn.id = group.id;
     groupBtn.textContent = group.groupName;
     removeBtn.classList.add("remove-button");

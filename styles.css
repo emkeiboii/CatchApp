@@ -50,6 +50,10 @@ aside {
   grid-area: aside;
 }
 
+header {
+  padding: 0 0 1rem 0;
+}
+
 /* ─────────────── NAVIGATION ─────────────── */
 .nav {
   flex: 0 0 auto;
@@ -106,14 +110,23 @@ main {
 
 .open-modal.button {
   all: unset;
-  background-color: var(--brand-500);
-  cursor: pointer;
-  padding: 8px 20px;
-  color: white;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   width: fit-content;
+  font-weight: 400;
+  color: var(--white);
+  background-color: var(--brand-500);
+  padding: 8px 16px 8px 14px;
+  border-radius: 5px;
   transition: all 250ms ease-in-out;
+  cursor: pointer;
 }
+
+.open-modal.button svg {
+  height: 20px;
+}
+
 .open-modal.button:hover {
   background-color: var(--brand-700);
 }
@@ -235,20 +248,40 @@ aside {
   padding: 1rem;
 }
 
+.home-area {
+  padding: 0 0 1rem 0;
+}
+
 .home-area ul li {
   display: flex;
   gap: 10px;
   padding: 4px 8px;
   background-color: var(--neutral-200);
   border-radius: 4px;
+  transition: all 250ms ease-in-out;
+  border: 0.2px solid transparent;
   cursor: pointer;
+}
+
+.home-area li:hover {
+  border: 0.2px solid var(--neutral-400);
+  background-color: var(--neutral-250);
 }
 
 .home-area img {
   height: 20px;
 }
 
+#home button {
+  font-weight: 400;
+}
+
 /* ─────────────── GROUPS ─────────────── */
+
+h3 {
+  padding: 0 0 8px 0;
+}
+
 #groups {
   margin-top: 20px;
 
@@ -262,26 +295,42 @@ aside {
   justify-content: space-between;
 }
 
+.groups-area {
+  padding: 1rem 0;
+}
+
 .group-item {
+  border: 0.2px solid transparent;
+}
+
+.group-item:hover {
+  border: 0.2px var(--neutral-400) solid;
+  border-radius: 4px;
+}
+
+.group-item .group-name-button {
   background-color: var(--neutral-200);
   padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* .group-item button {
-  background-color: var(--neutral-200);
-  padding: 8px 12px;
-  border-radius: 8px;
-}
-.group-item:hover button:not(.remove-button) {
-  background-color: var(--neutral-250);
-  transition: all 150ms ease-in-out;
-}
-
-.group-item button:nth-of-type(1) {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  transition: background-color 250ms ease-in-out;
   width: 100%;
-} */
+}
+
+.group-item .remove-button {
+  background-color: var(--neutral-200);
+  padding: 4px 8px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-left: 1px solid var(--neutral-250);
+}
+
+.group-item .group-name-button:hover {
+  background-color: var(--neutral-250);
+}
+.remove-button:hover {
+  background-color: var(--neutral-250);
+}
 
 .remove-button svg {
   fill: red;
@@ -308,6 +357,11 @@ button {
   padding: 12px 24px;
   color: var(--neutral-100);
   border-radius: 5px;
+}
+
+#btnMakeGroup {
+  padding: 4px;
+  border: 0.2px var(--neutral-250) solid;
 }
 
 /* ─────────────── SVGs & ICON STYLING ─────────────── */

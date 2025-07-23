@@ -9,7 +9,9 @@
   </head>
   <body>
     <aside>
-      <h2>Catchapp</h2>
+      <header>
+        <h2>Catchapp</h2>
+      </header>
       <div class="home-area">
         <ul>
           <li id="home">
@@ -19,11 +21,18 @@
       </div>
       <div class="groups-area">
         <h3>Groups</h3>
-        <form class="make-group-form" id="make-group-form">
-          <label for="makeGroup">Create group: </label
-          ><input id="makeGroup" name="makeGroup" type="text" required />
-          <button id="btnMakeGroup">+</button>
-        </form>
+        <div>
+          <form class="make-group-form" id="make-group-form">
+            <input
+              placeholder="Create new group"
+              id="makeGroup"
+              name="makeGroup"
+              type="text"
+              required
+            />
+            <button id="btnMakeGroup">+</button>
+          </form>
+        </div>
         <ul id="groups"></ul>
       </div>
     </aside>
@@ -33,7 +42,39 @@
         <div class="contact-container">
           <section class="filters">
             <div class="input-filters">
-              <button class="button open-modal" id="open-modal">Add</button>
+              <button class="button open-modal" id="open-modal">
+                <svg
+                  id="Layer_1"
+                  data-name="Layer 1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M9.33,15h5.34c3.22,0,5.83,2.61,5.83,5.83v.17H3.5v-.17c0-3.22,2.61-5.83,5.83-5.83Z"
+                    style="
+                      fill: none;
+                      stroke: currentColor;
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 2.2px;
+                    "
+                  />
+                  <circle
+                    cx="12"
+                    cy="7.25"
+                    r="4.25"
+                    style="
+                      fill: none;
+                      stroke: currentColor;
+                      stroke-linecap: round;
+                      stroke-linejoin: round;
+                      stroke-width: 2.2px;
+                    "
+                  /></svg
+                >Add
+              </button>
               <span>Last Contact</span>
               <select name="sort" id="contact-sort">
                 <option value="default">Sort by</option>
